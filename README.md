@@ -67,4 +67,20 @@ Roger Rtcliff, Gail McKoon 2009)
 
 aか0どちらかの閾値に達すると判断が行われる
 
+## アンケートで通知システムを動かすには
+nodejs環境使用  
+json_diplay_localhost.jsをターミナル上で実行すると  
+
+<img width="306" height="57" alt="image" src="https://github.com/user-attachments/assets/7f739579-1655-464a-a7f0-b3d2828766a2" />  
+
+上の通り待機状態になる。この際localhost上でmessages.jsonが表示されるようになっているが、今回は同一ネット上以外からもアクセスできるようにしたい。    
+これの実現はvscode上で実装されている機能を使った。  
+
+詳細はこちら参考 https://code.visualstudio.com/docs/debugtest/port-forwarding  
+
+ポート開放をして外部からアクセスできるURLを作成した。qualtrics上にはqualtrics_notification_sys.jsが組み込まれている。このコード上にはアクセスできるurlが張り付けられており(＊実験はまだ行ってないのでアクセスできないようになっているはず)、外部ネットワークから回答したとしてもmessages.jsonに記載された通知内容を表示することができるようになっている。  
+
+<img width="1356" height="374" alt="image" src="https://github.com/user-attachments/assets/70d49d5f-6d9c-4fe2-9d28-2f23bc247770" />  
+
+上が通知例  
 
