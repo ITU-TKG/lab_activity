@@ -6,7 +6,7 @@ Qualtrics.SurveyEngine.addOnload(function()
 Qualtrics.SurveyEngine.addOnReady(function()
 {
 	// node.jsサーバーのurl
-	var serverUrl = "https://9dc9l30c-8080.asse.devtunnels.ms/";
+	var serverUrl = "";
 	loadMessagesFromServer(serverUrl);
 });
 	//return; // 方法2を使う場合はここでreturnして、方法1の処理をスキップ
@@ -136,3 +136,4 @@ function showNotification(message, type) {
 		}, 300);
 	}, 5000);
 }
+
