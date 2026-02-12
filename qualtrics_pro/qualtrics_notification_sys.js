@@ -6,17 +6,20 @@ Qualtrics.SurveyEngine.addOnload(function()
 Qualtrics.SurveyEngine.addOnReady(function()
 {
 	// node.jsサーバーのurl
-	var serverUrl = "";
-	loadMessagesFromServer(serverUrl);
+	var serverUrl = "https://9dc9l30c-8080.asse.devtunnels.ms/";
+	
+	//テキストタイプ変更点
+	var messageGroup = "negative";
+
+	loadMessagesFromServer(serverUrl, messageGroup);
 });
-	//return; // 方法2を使う場合はここでreturnして、方法1の処理をスキップ
 
 Qualtrics.SurveyEngine.addOnUnload(function()
 {
 	/*ページの読み込みが解除されたときに実行するJavaScriptをここに配置してください*/
 });
 // サーバーからJSONを取得してランダムに通知を表示する関数
-function loadMessagesFromServer(url) {
+function loadMessagesFromServer(url, group) {
 	fetch(url)
 		.then(function(response) {
 			if (!response.ok) {
@@ -25,18 +28,32 @@ function loadMessagesFromServer(url) {
 			return response.json();
 		})
 		.then(function(data) {
-			// JSONの形式: {"messages": ["メッセージ1", "メッセージ2", ...], "type": "info"}
+			var messages = [];
 			
-			// messagesが配列かどうかを確認
-			if (!data.messages || !Array.isArray(data.messages) || data.messages.length === 0) {
-				console.error('JSONの形式が正しくありません');
+			// グループに応じてメッセージを選択
+			if (group === "random") {
+				// ランダムにグループを選択
+				var groups = ["positive", "neutral", "negative"];
+				var randomGroupIndex = Math.floor(Math.random() * groups.length);
+				var selectedGroup = groups[randomGroupIndex];
+				messages = data[selectedGroup] || [];
+			} else {
+				// 指定されたグループのメッセージを取得
+				messages = data[group] || [];
+			}
+			
+			// メッセージが空でないか確認
+			if (!Array.isArray(messages) || messages.length === 0) {
+				console.error('指定されたグループにメッセージがありません:', group);
 				showNotification('メッセージの読み込みに失敗しました', 'error');
 				return;
 			}
 			
 			// ランダムにメッセージを選択
-			var randomMessage = getRandomMessage(data.messages);
-			var notificationType = data.type || "info"; // JSONにtypeがあれば使用、なければ"info"
+			var randomMessage = getRandomMessage(messages);
+			
+			// グループに応じて通知タイプを設定
+			var notificationType = getNotificationType(group, data.type);
 			
 			// 1秒遅延してから通知を表示
 			setTimeout(function() {
@@ -53,11 +70,27 @@ function loadMessagesFromServer(url) {
 		});
 }
 
+// グループに応じて通知タイプを返す関数
+function getNotificationType(group, defaultType) {
+	switch(group) {
+		case "positive":
+			return "success"; // 緑色
+		case "neutral":
+			return "info";    // 青色
+		case "negative":
+			return "warning"; // オレンジ色
+		default:
+			return defaultType || "info";
+	}
+}
+
+
 // ランダムにメッセージを選択する関数
 function getRandomMessage(messagesArray) {
 	var randomIndex = Math.floor(Math.random() * messagesArray.length);
 	return messagesArray[randomIndex];
 }
+
 
 // 通知を表示する関数
 function showNotification(message, type) {
@@ -77,63 +110,62 @@ function showNotification(message, type) {
 		'animation: slideIn 0.3s ease-out; ' +
 		'max-width: 300px;';
 	
-	// タイプに応じて背景色を変更
-	switch(type) {
-		case 'success':
-			notification.style.backgroundColor = '#4CAF50';
-			break;
-		case 'error':
-			notification.style.backgroundColor = '#f44336';
-			break;
-		case 'warning':
-			notification.style.backgroundColor = '#ff9800';
-			break;
-		case 'info':
-		default:
-			notification.style.backgroundColor = '#2196F3';
-			break;
-	}
-	
-	// アニメーション用のスタイルを追加
-	if (!document.getElementById('notification-styles')) {
-		var style = document.createElement('style');
-		style.id = 'notification-styles';
-		style.textContent = `
-			@keyframes slideIn {
-				from {
-					transform: translateX(400px);
-					opacity: 0;
-				}
-				to {
-					transform: translateX(0);
-					opacity: 1;
-				}
-			}
-			@keyframes slideOut {
-				from {
-					transform: translateX(0);
-					opacity: 1;
-				}
-				to {
-					transform: translateX(400px);
-					opacity: 0;
-				}
-			}
-		`;
-		document.head.appendChild(style);
-	}
-	
-	// 通知をページに追加
-	document.body.appendChild(notification);
-	
-	// 5秒後に通知を削除
-	setTimeout(function() {
-		notification.style.animation = 'slideOut 0.3s ease-in';
-		setTimeout(function() {
-			if (notification.parentNode) {
-				notification.parentNode.removeChild(notification);
-			}
-		}, 300);
-	}, 5000);
+// タイプに応じて背景色を変更
+switch(type) {
+	case 'success':
+		notification.style.backgroundColor = '#4CAF50';
+		break;
+	case 'error':
+		notification.style.backgroundColor = '#f44336';
+		break;
+	case 'warning':
+		notification.style.backgroundColor = '#ff9800';
+		break;
+	case 'info':
+	default:
+		notification.style.backgroundColor = '#2196F3';
+		break;
 }
-
+	
+// アニメーション用のスタイルを追加
+if (!document.getElementById('notification-styles')) {
+	var style = document.createElement('style');
+	style.id = 'notification-styles';
+	style.textContent = `
+		@keyframes slideIn {
+			from {
+				transform: translateX(400px);
+				opacity: 0;
+			}
+			to {
+				transform: translateX(0);
+				opacity: 1;
+			}
+		}
+		@keyframes slideOut {
+			from {
+				transform: translateX(0);
+				opacity: 1;
+			}
+			to {
+				transform: translateX(400px);
+				opacity: 0;
+			}
+		}
+	`;
+	document.head.appendChild(style);
+}
+	
+// 通知をページに追加
+document.body.appendChild(notification);
+	
+// 5秒後に通知を削除
+setTimeout(function() {
+	notification.style.animation = 'slideOut 0.3s ease-in';
+	setTimeout(function() {
+		if (notification.parentNode) {
+			notification.parentNode.removeChild(notification);
+		}
+	}, 300);
+}, 5000);
+}
