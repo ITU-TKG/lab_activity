@@ -1,7 +1,13 @@
 # lab_activity
 ## 更新履歴
+### 2026/2/10
 2/10時点での進捗状況を反映  
 fileのrenameとそれぞれの役割を記載  
+
+### 2026/2/13  
+messages.jsonにpos neg neuのラベルを追加
+qualtrics_notification_sys.jsにラベルごとにランダム化する機能を追加
+feat, fixブランチにマージ　以後はこちらで作業すること
 
 ## ファイル説明
 qualtrics_pro/messages.json --- 通知システムにより表示するテキスト  
