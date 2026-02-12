@@ -21,7 +21,7 @@ img/ ~ --- 実験で使用する画像ファイル　qualtrics内にインポー
 ＊"qualtrics_pro/messages.json"　と　"qualtrics_pro/json_display_localhost.js"　は　ローカルで動かす  　
 
 ## 研究について（進捗など順を追って記載する）
-### テーマ：個人の認知に他者感情が与える影響の分析
+### テーマ：個人の認知に他者感情が与える影響の分析 affective frame choice
 例)  
 ・SNSで他人の投稿を見ていたら何か気分悪くなってきた  
 ・誹謗中傷  
