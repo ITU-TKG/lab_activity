@@ -21,7 +21,7 @@ img/ ~ --- 実験で使用する画像ファイル　qualtrics内にインポー
 ＊"qualtrics_pro/messages.json"　と　"qualtrics_pro/json_display_localhost.js"　は　ローカルで動かす  　
 
 ## 研究について（進捗など順を追って記載する）
-### テーマ：個人の認知に他者感情が与える影響の分析
+### テーマ：個人の認知に他者感情が与える影響の分析 affective frame choice
 例)  
 ・SNSで他人の投稿を見ていたら何か気分悪くなってきた  
 ・誹謗中傷  
@@ -41,13 +41,13 @@ img/ ~ --- 実験で使用する画像ファイル　qualtrics内にインポー
 
 今回はフレーム選択課題を実験デザインに組み込む  
 ### フレーム選択課題について
-<img width="208" height="310" alt="watar500" src="https://github.com/user-attachments/assets/bf880a6a-4e66-423d-9c94-a41c84c0e928" />
-<img width="245" height="365" alt="water0" src="https://github.com/user-attachments/assets/3587399d-901e-4483-902a-ce87136c6d54" />  
+<img width="200" height="300" alt="watar500" src="https://github.com/user-attachments/assets/bf880a6a-4e66-423d-9c94-a41c84c0e928" />
+<img width="200" height="300" alt="water0" src="https://github.com/user-attachments/assets/3587399d-901e-4483-902a-ce87136c6d54" />  
 
 上のどちらかの画像を提示する  
 その後何らかの用で部屋を出たのち、戻ってきた所(という想定)コップは以下の通りになっていた  
 
-<img width="215" height="318" alt="water250" src="https://github.com/user-attachments/assets/cd24934d-8c87-49a1-a1e6-f2e4dbacf8d2" />  
+<img width="200" height="300" alt="water250" src="https://github.com/user-attachments/assets/cd24934d-8c87-49a1-a1e6-f2e4dbacf8d2" />  
 
 この時貴方は"半分も入っている(half full)","半分しか入っていない(half empty)"  
 どちらの表現がより自然であるか問うという課題である。
