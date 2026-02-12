@@ -76,9 +76,9 @@ function getNotificationType(group, defaultType) {
 		case "positive":
 			return "success"; // 緑色
 		case "neutral":
-			return "info";    // 青色
+			return "success";
 		case "negative":
-			return "warning"; // オレンジ色
+			return "success";
 		default:
 			return defaultType || "info";
 	}
