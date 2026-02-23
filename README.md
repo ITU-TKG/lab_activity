@@ -9,6 +9,9 @@ messages.jsonにpos neg neuのラベルを追加
 qualtrics_notification_sys.jsにラベルごとにランダム化する機能を追加
 feat, fixブランチにマージ　以後はこちらで作業すること
 
+### 2026/2/23
+README一部書き直し  
+
 ## ファイル説明
 qualtrics_pro/messages.json --- 通知システムにより表示するテキスト  
 qualtrics_pro/qualtrics_notification_sys.js --- qualtrics上で通知システムを動かす  
@@ -41,11 +44,16 @@ img/ ~ --- 実験で使用する画像ファイル　qualtrics内にインポー
 
 今回はフレーム選択課題を実験デザインに組み込む  
 ### フレーム選択課題について
-<img width="200" height="300" alt="watar500" src="https://github.com/user-attachments/assets/bf880a6a-4e66-423d-9c94-a41c84c0e928" />
-<img width="200" height="300" alt="water0" src="https://github.com/user-attachments/assets/3587399d-901e-4483-902a-ce87136c6d54" />  
+<img width="754" height="542" alt="image" src="https://github.com/user-attachments/assets/87a90767-d243-4269-864b-0ea838a11f59" />
+画像引用元：Frontiers | Do People Explicitly Make a Frame Choice Based on the Reference Point?
 
-上のどちらかの画像を提示する  
-その後何らかの用で部屋を出たのち、戻ってきた所(という想定)コップは以下の通りになっていた  
+上図の左側の画像のうち一つ提示、続いて右の画像を提示しグラス内の水量を  
+“半分も入っているか(half full)”   
+“半分しか入っていない(half empty)”  
+ のどちらで表現する方がより自然であるか問う課題  
+
+
+次に以下の画像を提示する
 
 <img width="200" height="300" alt="water250" src="https://github.com/user-attachments/assets/cd24934d-8c87-49a1-a1e6-f2e4dbacf8d2" />  
 
@@ -55,9 +63,30 @@ img/ ~ --- 実験で使用する画像ファイル　qualtrics内にインポー
 このフレーム選択課題を用いて人の参照点仮説に基づくフレーム選択には感情が介入するのかを検証する　というのが私の研究テーマである。
 
 ## 実験デザイン
-<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/92c2d8e6-254c-4093-b072-8a4f9117f438" />
 
-<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/84ed1fc5-604d-4162-b32c-36d90fc077c4" />
+実験参加者をポジティブグループとネガティブグループ、ニュートラルグループに分けてそれぞれポジティブテキスト、ネガティブテキスト、ニュートラルテキストを提示します  
+バックストーリーとして提示するのは  
+
+「目の前の500mlのグラスには0mlの水が入っています。その後、少し部屋を離れた際友人からメッセージが届きました。  
+10分後に戻ると、水の水量は250mlに達していました。今、このグラスを最も自然に表現する方法は何でしょうか?」
+
+
+
+
+全体の方法としては
+
+1, グラスを表示  
+2, 水量の回答  
+3, テキスト表示  
+4, 現在の気分回答とテキストの評価する  
+5, 250mlグラスを表示して　半分も入っている・半分しか入っていないどちらがより自然であるか問う  
+
+設問数は各グループそれぞれ6＊56の336問程度になる
+
+実験参加者をポジティブグループとネガティブグループ、ニュートラルグループに分けて
+それぞれポジティブテキスト、ネガティブテキスト、ニュートラルテキストを提示します
+
+
 
 ## 今後の展望
 ・認知プロセスのモデル化の検討　検討中モデル = drift diffusion model
@@ -71,7 +100,6 @@ https://pmc.ncbi.nlm.nih.gov/articles/PMC2474742/#S2
 (the diffusion decision model: theory and data for two-choice decision tasks
 Roger Rtcliff, Gail McKoon 2009)  
 
-aか0どちらかの閾値に達すると判断が行われる
 
 ## アンケートで通知システムを動かすには
 nodejs環境使用  
