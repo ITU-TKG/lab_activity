@@ -12,6 +12,9 @@ feat, fixブランチにマージ　以後はこちらで作業すること
 ### 2026/2/23
 README一部書き直し  
 
+### 2026/3/2  
+random group functionの削除　qualtrics_notification_sys.jsコードの見直し  
+
 ## ファイル説明
 qualtrics_pro/messages.json --- 通知システムにより表示するテキスト  
 qualtrics_pro/qualtrics_notification_sys.js --- qualtrics上で通知システムを動かす  
