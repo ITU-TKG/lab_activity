@@ -15,6 +15,9 @@ README一部書き直し
 ### 2026/3/2  
 random group functionの削除　qualtrics_notification_sys.jsコードの見直し  
 
+### 2026/3/25  
+vercelにてmessages.jsonをデプロイすることでサーバー側の負担を減らす  
+
 ## ファイル説明
 qualtrics_pro/messages.json --- 通知システムにより表示するテキスト  
 qualtrics_pro/qualtrics_notification_sys.js --- qualtrics上で通知システムを動かす  
@@ -47,10 +50,11 @@ img/ ~ --- 実験で使用する画像ファイル　qualtrics内にインポー
 
 今回はフレーム選択課題を実験デザインに組み込む  
 ### フレーム選択課題について
-<img width="754" height="542" alt="image" src="https://github.com/user-attachments/assets/87a90767-d243-4269-864b-0ea838a11f59" />
+<img width="601" height="916" alt="image" src="https://github.com/user-attachments/assets/77fc3f67-a8f7-43b6-8dcc-1df86db45388" />
+
 画像引用元：Frontiers | Do People Explicitly Make a Frame Choice Based on the Reference Point?
 
-上図の左側の画像のうち一つ提示、続いて右の画像を提示しグラス内の水量を  
+上図の画像のうち一つ提示、続いて右の画像を提示しグラス内の水量を  
 “半分も入っているか(half full)”   
 “半分しか入っていない(half empty)”  
  のどちらで表現する方がより自然であるか問う課題  
