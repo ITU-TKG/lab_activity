@@ -54,7 +54,7 @@ img/ ~ --- 実験で使用する画像ファイル　qualtrics内にインポー
 
 画像引用元：Frontiers | Do People Explicitly Make a Frame Choice Based on the Reference Point?
 
-上図の左側の画像のうち一つ提示、続いて右の画像を提示しグラス内の水量を  
+上図の画像のうち一つ提示、続いて右の画像を提示しグラス内の水量を  
 “半分も入っているか(half full)”   
 “半分しか入っていない(half empty)”  
  のどちらで表現する方がより自然であるか問う課題  
