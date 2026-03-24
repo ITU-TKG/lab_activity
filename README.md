@@ -50,7 +50,8 @@ img/ ~ --- 実験で使用する画像ファイル　qualtrics内にインポー
 
 今回はフレーム選択課題を実験デザインに組み込む  
 ### フレーム選択課題について
-<img width="754" height="542" alt="image" src="https://github.com/user-attachments/assets/87a90767-d243-4269-864b-0ea838a11f59" />
+<img width="601" height="916" alt="image" src="https://github.com/user-attachments/assets/77fc3f67-a8f7-43b6-8dcc-1df86db45388" />
+
 画像引用元：Frontiers | Do People Explicitly Make a Frame Choice Based on the Reference Point?
 
 上図の左側の画像のうち一つ提示、続いて右の画像を提示しグラス内の水量を  
