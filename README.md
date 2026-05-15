@@ -18,6 +18,9 @@ random group functionの削除　qualtrics_notification_sys.jsコードの見直
 ### 2026/3/25  
 vercelにてmessages.jsonをデプロイすることでサーバー側の負担を減らす  
 
+### 2026/5/16  
+add all text and fix qualtrics can record displayed message
+
 ## ファイル説明
 qualtrics_pro/messages.json --- 通知システムにより表示するテキスト  
 qualtrics_pro/qualtrics_notification_sys.js --- qualtrics上で通知システムを動かす  
