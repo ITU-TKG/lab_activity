@@ -93,7 +93,7 @@ function getRandomMessage(messagesArray, group) {
 	//初回/全テキストを表示しきったらシャッフルして50問表示
 	if (!state || state.index >= state.list.length) {
 		state = {
-			list: shuffle([...Array(messagesArray.length).keys()]),//json indexのシャッフル
+			list: shuffle([...Array(messagesArray.length).keys()]).slice(0, 50),//json indexのシャッフル
 			index: 0
 		};
 	}
