@@ -5,13 +5,10 @@ Qualtrics.SurveyEngine.addOnload(function()
 
 Qualtrics.SurveyEngine.addOnReady(function()
 {
-	
 	// node.jsサーバーのurl
 	var serverUrl = "https://lab-vercel-upload.vercel.app/messages.json";
-	
 	//テキストタイプ変更点 ("positive" / "neutral" / "negative" から選択)
 	var messageGroup = "positive";
-
 	loadMessagesFromServer(serverUrl, messageGroup);
 });
 
@@ -19,6 +16,7 @@ Qualtrics.SurveyEngine.addOnUnload(function()
 {
 	/*ページの読み込みが解除されたときに実行するJavaScriptをここに配置してください*/
 });
+
 
 // サーバーからJSONを取得してランダムに通知を表示する関数
 function loadMessagesFromServer(url, group) {
@@ -30,6 +28,7 @@ function loadMessagesFromServer(url, group) {
 			return response.json();
 		})
 		.then(function(data) {
+		
 			// 指定されたグループのメッセージを取得
 			var messages = data[group] || [];
 			
@@ -37,60 +36,78 @@ function loadMessagesFromServer(url, group) {
 			if (!Array.isArray(messages) || messages.length === 0) {
 				console.error('指定されたグループにメッセージがありません:', group);
 				showNotification('メッセージの読み込みに失敗しました', 'error');
-				//変更点下
 				recordMessageLog(null, group, 'failed', 'No messages found');
 				
 				return;
 			}
 			
 			// ランダムにメッセージを選択
-			var randomMessage = getRandomMessage(messages);
+			var randomMessage = getRandomMessage(messages, group);
 			
 			// グループに応じて通知タイプを設定
-			var notificationType = getNotificationType(group, data.type);
+			var notificationType = "success";
 			
-			// 変更2クアルトリクスの埋め込み変数に記録する関数を追加呼び出し
+			// クアルトリクスの埋め込み変数に記録する関数を追加呼び出し
 			recordMessageLog(randomMessage, group, 'success');
 			
-			// 1秒遅延してから通知を表示
+			// 遅延してから通知を表示
 			setTimeout(function() {
 				showNotification(randomMessage, notificationType);
-			}, 1000);
+			}, 500);
 		})
 		.catch(function(error) {
 			console.error('サーバーからのデータ取得に失敗しました:', error);
-			
-			// 変更3　エラー時もメッセージログを記録
+			//エラー時もメッセージログを記録
 			recordMessageLog(null, group, 'error', error.message);
-			
-			// エラー時は1秒後にエラー通知を表示
+			// エラー時は0.5秒後にエラー通知を表示
 			setTimeout(function() {
 				showNotification('メッセージの読み込みに失敗しました', 'error');
-			}, 1000);
+			}, 500);
 		});
 }
 
-// グループに応じて通知タイプを返す関数
-function getNotificationType(group, defaultType) {
-	switch(group) {
-		case "positive":
-			return "success"; // 緑色
-		case "neutral":
-			return "success";
-		case "negative":
-			return "success";
-		default:
-			return defaultType || "info";
-	}
+function shuffle(array) {
+    const arr = [...array];
+
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+
+    return arr;
 }
 
 // ランダムにメッセージを選択する関数
-function getRandomMessage(messagesArray) {
-	var randomIndex = Math.floor(Math.random() * messagesArray.length);
-	return messagesArray[randomIndex];
+function getRandomMessage(messagesArray, group) {
+	const storageKey = group + "Bag";
+	const currentKey = group + "Current";
+
+	//既に表示(再読み込み)していれば再度表示
+	const currentMessage = localStorage.getItem(currentKey);
+	if (currentMessage) {
+		return currentMessage;
+	}
+
+	let state = JSON.parse(localStorage.getItem(storageKey));
+
+	//初回/全テキストを表示しきったらシャッフルして50問表示
+	if (!state || state.index >= state.list.length) {
+		state = {
+			list: shuffle([...Array(messagesArray.length).keys()]),//json indexのシャッフル
+			index: 0
+		};
+	}
+	const randomMessage = messagesArray[state.list[state.index]];
+	state.index++;
+
+	localStorage.setItem(storageKey, JSON.stringify(state));
+	localStorage.setItem(currentKey, randomMessage);
+	console.log(group, state.index, randomMessage);//デバック
+
+	return randomMessage;
 }
 
-// ★★★ 【新規追加】クアルトリクスの埋め込み変数にメッセージログを記録する関数
+// クアルトリクスの埋め込み変数にメッセージログを記録する関数
 // 【説明】
 // このロギング機能により、以下の情報が自動的にクアルトリクスに記録されます：
 // - DisplayedMessage: 実際に表示されたメッセージ
@@ -122,7 +139,7 @@ function recordMessageLog(message, group, status, errorMessage) {
 				if (errorMessage) {
 					Qualtrics.SurveyEngine.setJSEmbeddedData('MessageError', errorMessage);
 				}
-				console.log('新しいAPI (setJSEmbeddedData) でログを記録しました');
+				console.log('setJSEmbeddedDataでログを記録しました');
 			} else {
 				// フォールバック: 従来のAPI
 				Qualtrics.SurveyEngine.setEmbeddedData('DisplayedMessage', message || '(メッセージなし)');
@@ -132,19 +149,17 @@ function recordMessageLog(message, group, status, errorMessage) {
 				if (errorMessage) {
 					Qualtrics.SurveyEngine.setEmbeddedData('MessageError', errorMessage);
 				}
-				console.log('従来のAPI (setEmbeddedData) でログを記録しました');
+				console.log('従来のAPIでログを記録しました');
 			}
 		} catch(e) {
 			console.warn('埋め込み変数の設定に失敗しました:', e);
 		}
-		
-		// ─────────────────────────────────────────
+		 
 		// 【ステップ2】JSON形式で全ログを保存（複数回表示される場合に対応）
-		// ─────────────────────────────────────────
 		// 既存のログを取得
 		var existingLogs;
 		try {
-			// ★ 新しいAPI
+			// 新しいAPI
 			if (typeof Qualtrics.SurveyEngine.getJSEmbeddedData === 'function') {
 				existingLogs = Qualtrics.SurveyEngine.getJSEmbeddedData('MessageLogs');
 			} else {
@@ -267,8 +282,7 @@ function showNotification(message, type) {
 	
 	// 通知をページに追加
 	document.body.appendChild(notification);
-	
-	// 5秒後に通知を削除
+	//5000ms後に削除
 	setTimeout(function() {
 		notification.style.animation = 'slideOut 0.3s ease-in';
 		setTimeout(function() {
@@ -277,4 +291,6 @@ function showNotification(message, type) {
 			}
 		}, 300);
 	}, 5000);
+	
+	
 }
